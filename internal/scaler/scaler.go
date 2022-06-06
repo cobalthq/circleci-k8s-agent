@@ -66,7 +66,9 @@ func (s *Service) ScaleRunners(ctx context.Context, namespace string, runnerName
 		return err
 	}
 
-	log.Printf("Spawned %d %s/%s runners", jobsToCreate, namespace, runnerName)
+	if jobsToCreate > 0 {
+		log.Printf("Spawned %d %s/%s runners", jobsToCreate, namespace, runnerName)
+	}
 	return nil
 }
 

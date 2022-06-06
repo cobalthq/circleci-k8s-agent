@@ -35,6 +35,44 @@ metadata:
 data:
   runners: runners/ruby-highcpu-2 # comma delimited, namespace/runner
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: circleci-k8s-agent
+  namespace: circleci
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: circleci-k8s-agent
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - secrets
+    verbs:
+      - get
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: circleci-k8s-agent
+  namespace: circleci
+subjects:
+  - kind: ServiceAccount
+    name: circleci-k8s-agent
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: circleci-k8s-agent
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -42,16 +80,37 @@ metadata:
   namespace: circleci
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: circleci-k8s-agent
   template:
+    metadata:
+      labels:
+        app: circleci-k8s-agent
     spec:
+      serviceAccountName: circleci-k8s-agent
       containers:
-      - name: agent
-        image: cobaltlabs/circleci-k8s-agent:0.1.0
+        - name: agent
+          image: cobaltlabs/circleci-k8s-agent:latest
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: runners
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: circleci-k8s-agent
+  namespace: runners
+subjects:
+  - kind: ServiceAccount
+    name: circleci-k8s-agent
+    namespace: circleci
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: circleci-k8s-agent
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -70,8 +129,8 @@ metadata:
   name: circleci-ruby-highcpu-2
   namespace: runners
 data:
-  token: AGENT-TOKEN-HERE
-  circle-token: CIRCLECI-TOKEN-HERE
+  token: c29vcGVyc2Vrcml0
+  circle-token: c29vcGVyc2Vrcml0
 ---
 apiVersion: v1
 kind: Secret
@@ -79,5 +138,5 @@ metadata:
   name: circleci-ruby-highcpu-2-env
   namespace: runners
 data:
-  SUPER_SECRET_VAR: soopersekrit
+  SUPER_SECRET_VAR: c29vcGVyc2Vrcml0
 ```
