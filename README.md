@@ -91,7 +91,7 @@ spec:
       serviceAccountName: circleci-k8s-agent
       containers:
         - name: agent
-          image: cobaltlabs/circleci-k8s-agent:latest
+          image: cobaltlabs/circleci-k8s-agent:0.1.0
 ---
 apiVersion: v1
 kind: Namespace
