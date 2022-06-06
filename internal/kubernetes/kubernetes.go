@@ -6,9 +6,9 @@ import (
 	"flag"
 	"fmt"
 	"github.com/cobalthq/circleci-k8s-agent/internal/core"
+	"io/ioutil"
 	"k8s.io/client-go/rest"
-
-	//"io/ioutil"
+	"io/ioutil"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
@@ -37,12 +37,11 @@ func NewService() (*Service, error) {
 }
 
 func (k *Service) GetCurrentNamespace() (string, error){
-	/*b, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
+	b, err := ioutil.ReadFile("/var/run/secrets/kubernetes.io/serviceaccount/namespace")
 	if err != nil {
 		return "", err
 	}
-	return string(b), nil*/
-	return "circleci", nil
+	return string(b), nil
 }
 
 func (k *Service) GetAgentConfig(ctx context.Context) (*core.AgentConfig, error) {
