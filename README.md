@@ -1,5 +1,8 @@
 # circleci-k8s-agent
 
+[![cobalthq](https://circleci.com/gh/cobalthq/circleci-k8s-agent/tree/main.svg?style=svg)](https://circleci.com/gh/cobalthq/circleci-k8s-agent/?branch=main)
+[![DockerHub](https://img.shields.io/docker/pulls/cobaltlabs/circleci-k8s-agent)](https://hub.docker.com/r/cobaltlabs/circleci-k8s-agent)
+
 Creates Kubernetes jobs to process CircleCI self-hosted worker queues.
 
 # Usage
