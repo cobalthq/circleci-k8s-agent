@@ -7,7 +7,7 @@ COPY go.mod go.sum ./
 RUN go mod download && go mod verify
 
 COPY . .
-RUN go build -v -o /build/circleci-k8s-agent ./...
+RUN go build -v -o /build/circleci-k8s-agent
 
 FROM alpine:3.14.2
 

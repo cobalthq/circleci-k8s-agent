@@ -46,7 +46,7 @@ spec:
     spec:
       containers:
       - name: agent
-        image: cobaltlabs/circleci-scaler-k8s:0.1.0
+        image: cobaltlabs/circleci-k8s-agent:0.1.0
 ---
 apiVersion: v1
 kind: Namespace
