@@ -61,7 +61,7 @@ func (s *Service) ScaleRunners(ctx context.Context, namespace string, runnerName
 	pendingPods := int(math.Max(float64(activeRunnerCount - runningJobs), 0))
 	jobsToCreate := waitingJobs - pendingPods
 
-	err = s.k8s.SpawnWorkers(ctx, namespace, config, vars, jobsToCreate)
+	err = s.k8s.SpawnRunners(ctx, namespace, config, vars, jobsToCreate)
 	if err != nil {
 		return err
 	}

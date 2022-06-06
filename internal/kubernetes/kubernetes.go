@@ -3,20 +3,15 @@ package kubernetes
 import (
 	"context"
 	"errors"
-	"flag"
 	"fmt"
 	"github.com/cobalthq/circleci-k8s-agent/internal/core"
 	"io/ioutil"
 	"k8s.io/client-go/rest"
-	"io/ioutil"
 	batchv1 "k8s.io/api/batch/v1"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/client-go/util/homedir"
-	"path/filepath"
 	_ "k8s.io/client-go/plugin/pkg/client/auth/gcp"
 	"strings"
 )
@@ -155,7 +150,7 @@ func (k *Service) GetActiveRunnerCount(ctx context.Context, namespace string, ru
 	return count, nil
 }
 
-func (s *Service) SpawnWorkers(ctx context.Context, namespace string, config *core.RunnerConfig, envSecrets []string, count int) error {
+func (s *Service) SpawnRunners(ctx context.Context, namespace string, config *core.RunnerConfig, envSecrets []string, count int) error {
 	env := []corev1.EnvVar{
 		{
 			Name: "CIRCLECI_RESOURCE_CLASS",
