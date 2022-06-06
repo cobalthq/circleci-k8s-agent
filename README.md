@@ -59,6 +59,12 @@ rules:
       - pods
     verbs:
       - list
+  - apiGroups:
+      - batch
+    resources:
+      - jobs
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
