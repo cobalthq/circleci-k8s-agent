@@ -138,7 +138,7 @@ metadata:
   name: circleci-ruby-highcpu-2
   namespace: runners
 data:
-  token: c29vcGVyc2Vrcml0
+  runner-token: c29vcGVyc2Vrcml0
   circle-token: c29vcGVyc2Vrcml0
 ---
 apiVersion: v1
